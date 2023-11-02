@@ -40,6 +40,7 @@ public class CannonTurret : MonoBehaviour
 
     void AttackBullet()
     {
-        Instantiate(GeneralManager.instance.circleBullet, transform.parent.GetChild(2).transform.position, this.transform.rotation);
+        GameObject circle = Instantiate(GeneralManager.instance.circleBullet, transform.parent.GetChild(2).transform.position, this.transform.rotation);
+        circle.GetComponent<CircleCollider2D>().radius = circle.GetComponent<DrawLRObjs>().radius;
     }
 }

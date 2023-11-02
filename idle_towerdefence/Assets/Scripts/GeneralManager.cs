@@ -12,4 +12,6 @@ public class GeneralManager : MonoBehaviour
 
     public GameObject triBullet;
     public GameObject circleBullet;
+    public GameObject turret;
+    public GameObject enemy1;
 }
