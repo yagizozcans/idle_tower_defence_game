@@ -35,6 +35,10 @@ public class PlayerObj : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
         for (int i = 0; i < enemies.Length; i++)
         {
+            if(closestEnemy == null)
+            {
+                closestEnemy = enemies[i];
+            }
             float distance = Mathf.Sqrt(Mathf.Pow(transform.position.x - enemies[i].transform.position.x, 2) + Mathf.Pow(transform.position.y - enemies[i].transform.position.y, 2));
             oldclosestDistance = Mathf.Sqrt(Mathf.Pow(transform.position.x - closestEnemy.transform.position.x, 2) + Mathf.Pow(transform.position.y - closestEnemy.transform.position.y, 2));
             if (distance < oldclosestDistance)
@@ -72,7 +76,7 @@ public class PlayerObj : MonoBehaviour
     {
         float angle = Mathf.Atan2(transform.position.y - closestEnemy.transform.position.y, transform.position.x - closestEnemy.transform.position.x) * Mathf.Rad2Deg + 90;
         GameObject cBullet = Instantiate(GeneralManager.instance.circleBullet, transform.position, Quaternion.Euler(0,0,angle));
-        cBullet.GetComponent<TriBullet>().movementSpeed = 16;
+        cBullet.GetComponent<TriBullet>().movementSpeed = 8;
         cBullet.GetComponent<CircleCollider2D>().radius = cBullet.GetComponent<DrawLRObjs>().radius;
     }
 }

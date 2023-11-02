@@ -5,10 +5,12 @@ using UnityEngine;
 public class TurretManager : MonoBehaviour
 {
     public float radius;
-    public float turretAttackSpeed;
+    public float turretAttackTime;
+    public float turretAttackTimeErrorPercentage;
+    public float turretRotateSpeed;
     public int turretCount;
     public GameObject turret;
-    float timer;
+
     // Update is called once per frame
 
     private void Start()
@@ -18,12 +20,7 @@ public class TurretManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        timer += Time.fixedDeltaTime;
-        if(timer > turretAttackSpeed)
-        {
-            TurretAttack();
-            timer = 0;
-        }
+        TurretFacing();
     }
     void SpawnTurrets(int turretsc)
     {
@@ -37,10 +34,12 @@ public class TurretManager : MonoBehaviour
 
         for(int i = 0; i < Mathf.Clamp(turretsc,0, transform.GetChild(0).transform.childCount); i++)
         {
-            Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
+            GameObject nturret = Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
+            nturret.GetComponent<TurnFaceToObj>().rotateSpeed = turretRotateSpeed;
+            nturret.GetComponentInChildren<CannonTurret>().recoilSpeed = 1/Random.Range(turretAttackTime - turretAttackTime / turretAttackTimeErrorPercentage, turretAttackTime + turretAttackTime / turretAttackTimeErrorPercentage);
         }
     }
-    void TurretAttack()
+    void TurretFacing()
     {
         if(radius / 2 > PlayerObj.instance.oldclosestDistance)
         {

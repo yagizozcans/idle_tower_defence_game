@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 366153814417071313}
   m_Layer: 0
   m_Name: CircleBullet
-  m_TagString: Untagged
+  m_TagString: bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lr: {fileID: 0}
   cornercount: 8
-  radius: 0.15
+  radius: 0.2
   lineWidth: 0.01
 --- !u!58 &366153814417071313
 CircleCollider2D:

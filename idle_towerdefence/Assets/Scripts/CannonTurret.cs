@@ -32,7 +32,10 @@ public class CannonTurret : MonoBehaviour
             transform.position = Vector2.Lerp(transform.position, firstPos, recoilSpeed);
             if ((Vector2)transform.position == firstPos)
             {
-                AttackBullet();
+                if(transform.parent.GetComponent<TurnFaceToObj>().target != null)
+                {
+                    AttackBullet();
+                }
                 isAttacking = !isAttacking;
             }
         }

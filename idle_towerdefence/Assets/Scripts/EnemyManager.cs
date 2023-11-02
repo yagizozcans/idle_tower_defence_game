@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public float spawnRate;
     void Update()
     {
-        //InstantiateEnemy(GeneralManager.instance.enemy1);
         EnemyRain(GeneralManager.instance.enemy1);
+
+    }
+    private void Start()
+    {
+        //StartCoroutine(InstantiateEnemy(GeneralManager.instance.enemy1));
     }
 
     //enemy rain
-    void EnemyRain(GameObject enemy)
+    IEnumerator InstantiateEnemy(GameObject enemy)
     {
+        yield return new WaitForSeconds(spawnRate);
         float xAxis = Random.Range(1f, 5f);
         float yAxis = Random.Range(1f, 5f);
         float angle = Mathf.Atan2(yAxis - PlayerObj.instance.transform.position.y, xAxis - PlayerObj.instance.transform.position.x) * Mathf.Rad2Deg;
@@ -23,11 +29,12 @@ public class EnemyManager : MonoBehaviour
         angle = Mathf.Atan2(yAxis - PlayerObj.instance.transform.position.y, xAxis - PlayerObj.instance.transform.position.x) * Mathf.Rad2Deg;
         targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
         Instantiate(enemy, new Vector2(xAxis, yAxis), targetRotation);
+        StartCoroutine(InstantiateEnemy(GeneralManager.instance.enemy1));
     }
-    void InstantiateEnemy(GameObject enemy)
+    void EnemyRain(GameObject enemy)
     {
-        float xAxis = Random.Range(1f, 5f);
-        float yAxis = Random.Range(1f, 5f);
+        float xAxis = Random.Range(2f, 5f);
+        float yAxis = Random.Range(3f, 5f);
         float angle = Mathf.Atan2(yAxis - PlayerObj.instance.transform.position.y, xAxis - PlayerObj.instance.transform.position.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
         Instantiate(enemy, new Vector2(xAxis, yAxis), targetRotation);

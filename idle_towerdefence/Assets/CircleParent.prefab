@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1144205821473194062}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: turningcircle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lr: {fileID: 0}
   cornercount: 16
-  radius: 0.02
+  radius: 0.05
   lineWidth: 0.01
 --- !u!96 &13149558276089351
 TrailRenderer:
