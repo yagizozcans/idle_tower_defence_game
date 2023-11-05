@@ -16,11 +16,12 @@ public class PlayerObj : MonoBehaviour
     public float attackSpeed;
     float timer;
     bool outofsight;
+    public bool autoattack;
 
     private void Start()
     {
         instance = this;
-
+        GetComponent<CircleCollider2D>().radius = GetComponent<DrawLRObjs>().radius;
         AttackRangeLRUpdate();
     }
 
@@ -28,6 +29,10 @@ public class PlayerObj : MonoBehaviour
     {
         CheckClosestEnemy();
         timer += Time.deltaTime;
+        if(Input.GetMouseButtonDown(0))
+        {
+            AttackMainObj();
+        }
     }
 
     void CheckClosestEnemy()
@@ -57,7 +62,7 @@ public class PlayerObj : MonoBehaviour
             outofsight = false;
         }
 
-        if (timer > attackSpeed && !outofsight)
+        if (timer > attackSpeed && !outofsight && autoattack)
         {
             if(oldclosestDistance < radius/2)
             {
@@ -72,11 +77,19 @@ public class PlayerObj : MonoBehaviour
         transform.GetChild(0).GetComponent<DrawLRObjs>().DrawObjLooped(16, radius);
     }
 
-    void AttackMainObj()
+    public void AttackMainObj()
     {
         float angle = Mathf.Atan2(transform.position.y - closestEnemy.transform.position.y, transform.position.x - closestEnemy.transform.position.x) * Mathf.Rad2Deg + 90;
         GameObject cBullet = Instantiate(GeneralManager.instance.circleBullet, transform.position, Quaternion.Euler(0,0,angle));
-        cBullet.GetComponent<TriBullet>().movementSpeed = 8;
+        cBullet.GetComponent<TriBullet>().movementSpeed = 16;
         cBullet.GetComponent<CircleCollider2D>().radius = cBullet.GetComponent<DrawLRObjs>().radius;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "enemy")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

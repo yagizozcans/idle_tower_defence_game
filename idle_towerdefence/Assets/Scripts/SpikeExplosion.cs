@@ -7,13 +7,14 @@ public class SpikeExplosion : MonoBehaviour
     LineRenderer lr;
 
     public float explosionTime;
+    public int spikeCount;
 
     float timer;
 
     private void Start()
     {
         lr = GetComponent<LineRenderer>();
-        SetSpikes(2);
+        SetSpikes();
     }
 
     private void Update()
@@ -26,17 +27,21 @@ public class SpikeExplosion : MonoBehaviour
         }
     }
 
-    public void SetSpikes(float size)
+    public void SetSpikes()
     {
         LineRenderer parentLR = gameObject.transform.parent.GetComponent<LineRenderer>();
 
-        lr.positionCount = parentLR.positionCount * 2;
+        float size = parentLR.GetPosition(0).x;
 
-        for(int i = 0; i < parentLR.positionCount * 2; i++)
+        lr.positionCount = spikeCount * 2;
+
+        for(int i = 0; i < spikeCount * 2; i++)
         {
             if(i % 2 == 0)
             {
-                lr.SetPosition(i, new Vector3(parentLR.GetPosition(i/2).x / size, parentLR.GetPosition(i/2).y / size, 0));
+                float degree = (360 / spikeCount) * (i/2+1);
+                Debug.Log(degree);
+                lr.SetPosition(i, new Vector3(size * Mathf.Sin(degree * Mathf.PI / 180) / 2, Mathf.Cos(degree * Mathf.PI / 180) / 2, 0));
             }
             else
             {

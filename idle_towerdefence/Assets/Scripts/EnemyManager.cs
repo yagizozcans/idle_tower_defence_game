@@ -7,12 +7,12 @@ public class EnemyManager : MonoBehaviour
     public float spawnRate;
     void Update()
     {
-        EnemyRain(GeneralManager.instance.enemy1);
+        //EnemyRain(GeneralManager.instance.enemy1);
 
     }
     private void Start()
     {
-        //StartCoroutine(InstantiateEnemy(GeneralManager.instance.enemy1));
+        StartCoroutine(InstantiateEnemy(GeneralManager.instance.enemy1));
     }
 
     //enemy rain
