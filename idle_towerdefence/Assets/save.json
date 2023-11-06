@@ -1,0 +1,22 @@
+{
+    "moAttackSpeedLevel": 0,
+    "moActive": false,
+    "seCountLevel": 0,
+    "seExplosionTimeLevel": 0,
+    "seActive": false,
+    "tcTurnSpeedLevel": 0,
+    "tcCountLevel": 1,
+    "tcRespawnTimeLevel": 0,
+    "tcActive": false,
+    "ttTurnSpeedLevel": 0,
+    "ttCountLevel": 0,
+    "ttActive": false,
+    "ntRotateSpeedLevel": 0,
+    "ntCountLevel": 1,
+    "ntAttackTimeLevel": 0,
+    "ntActive": false,
+    "stAttackSpeedLevel": 0,
+    "stGraphParameterLevel": 0,
+    "stColorLevel": 0,
+    "stActive": false
+}

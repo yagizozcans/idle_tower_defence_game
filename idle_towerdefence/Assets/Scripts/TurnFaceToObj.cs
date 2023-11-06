@@ -5,7 +5,6 @@ using UnityEngine;
 public class TurnFaceToObj : MonoBehaviour
 {
     public Transform target;
-    public float rotateSpeed;
 
     public void FixedUpdate()
     {
@@ -13,7 +12,7 @@ public class TurnFaceToObj : MonoBehaviour
         {
             float angle = Mathf.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, GeneralManager.instance.ntRotateSpeed[GeneralManager.instance.gameData.ntRotateSpeedLevel] * Time.deltaTime);
         }
     }
 }

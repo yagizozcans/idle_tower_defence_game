@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class GeneralManager : MonoBehaviour
 {
@@ -8,40 +9,47 @@ public class GeneralManager : MonoBehaviour
 
     //Middle Object Auto Attack
     public float[] moAttackSpeed;
-    public bool moActive;
 
     //Spike Explosion
     public int[] seCount;
-    public int[] seExplosionTime;
-    public bool seActive;
+    public float[] seExplosionTime;
 
     //Turning Circles
     public float[] tcTurnSpeed;
     public int[] tcCount;
     public float[] tcRespawnTime;
-    public bool tcActive;
 
     //Triangle Turrets
     public float[] ttTurnSpeed;
     public int[] ttCount;
-    public bool ttActive;
 
     //Normal Turret
     public float[] ntRotateSpeed;
     public int[] ntCount;
     public float[] ntAttackTime;
-    public bool ntActive;
+
+    //Xray Turret
+    public int[] xrayCount;
+    public int[] xrayTurn;
 
     //Spike Thrower
     public float[] stAttackSpeed;
     public int[] stGraphParameter;
     public Color[] stColor;
-    public bool stActive;
+
+
+    public GameData gameData;
 
     private void Start()
     {
         instance = this;
+        LoadFromJson();
     }
+
+    public GameObject xRayTurretObj;
+    public GameObject triTurretObj;
+    public GameObject circleTurretObj;
+
 
     public GameObject triBullet;
     public GameObject circleBullet;
@@ -65,6 +73,12 @@ public class GeneralManager : MonoBehaviour
 
     public void SaveToJson()
     {
-        GameData data = new GameData();
+        string json = JsonUtility.ToJson(gameData, true);
+        File.WriteAllText(Application.dataPath + "/save.json", json);
+    }
+    public void LoadFromJson()
+    {
+        string json = File.ReadAllText(Application.dataPath + "/save.json");
+        gameData = JsonUtility.FromJson<GameData>(json);
     }
 }

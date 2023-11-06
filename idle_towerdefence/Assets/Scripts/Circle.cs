@@ -24,7 +24,7 @@ public class Circle : MonoBehaviour
             GetComponent<TrailRenderer>().startColor = passiveColor;
             GetComponent<TrailRenderer>().endColor = passiveColor;
         }
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(GeneralManager.instance.tcRespawnTime[GeneralManager.instance.gameData.tcRespawnTimeLevel]);
         isRespawning = false;
         GetComponent<LineRenderer>().startColor = activeColorStart;
         GetComponent<LineRenderer>().endColor = activeColorStart;

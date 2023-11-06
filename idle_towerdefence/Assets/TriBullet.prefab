@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1878636586992094772}
   - component: {fileID: 7386977955170844386}
   - component: {fileID: 4765093515004553150}
-  - component: {fileID: 3118093783736523531}
   - component: {fileID: 3595795981138604936}
   m_Layer: 0
   m_Name: TriBullet
@@ -156,18 +155,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &3118093783736523531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892028402715496873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0004525805007244fbbc73eb692118de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  collideWithNew: 0
 --- !u!68 &3595795981138604936
 EdgeCollider2D:
   m_ObjectHideFlags: 0

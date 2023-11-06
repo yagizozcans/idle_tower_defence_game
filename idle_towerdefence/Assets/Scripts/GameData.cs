@@ -6,38 +6,42 @@ using UnityEngine;
 public class GameData
 {
     //Middle Object Auto Attack
-    public float moAttackSpeed;
+    public int moAttackSpeedLevel;
     public bool moActive;
 
     //Spike Explosion
-    public int seCount;
-    public int seExplosionTime;
+    public int seCountLevel;
+    public int seExplosionTimeLevel;
     public bool seActive;
 
     //Turning Circles
-    public float tcTurnSpeed;
-    public int tcCount;
-    public float tcRespawnTime;
+    public int tcTurnSpeedLevel;
+    public int tcCountLevel;
+    public int tcRespawnTimeLevel;
     public bool tcActive;
 
 
     //Triangle Turrets
-    public float ttTurnSpeed;
-    public int ttCount;
+    public int ttTurnSpeedLevel;
+    public int ttCountLevel;
     public bool ttActive;
 
 
     //Normal Turret
-    public float ntRotateSpeed;
-    public int ntCount;
-    public float ntAttackTime;
+    public int ntRotateSpeedLevel;
+    public int ntCountLevel;
+    public int ntAttackTimeLevel;
     public bool ntActive;
 
+    //Xray Turret
+    public int xrayCountLevel;
+    public int xrayTurnLevel;
+    public bool xrayActive;
 
     //Spike Thrower
-    public float stAttackSpeed;
-    public int stGraphParameter;
-    public Color stColor;
+    public int stAttackSpeedLevel;
+    public int stGraphParameterLevel;
+    public int stColorLevel;
     public bool stActive;
 
 }

@@ -5,33 +5,22 @@ using UnityEngine;
 public class SpikeExplosion : MonoBehaviour
 {
     LineRenderer lr;
-
-    public float explosionTime;
-    public int spikeCount;
-
-    float timer;
-
     private void Start()
     {
-        lr = GetComponent<LineRenderer>();
-        SetSpikes();
-    }
-
-    private void Update()
-    {
-        timer += Time.deltaTime;
-        if(timer > explosionTime)
+        if(GeneralManager.instance.gameData.seActive)
         {
-            CreateSpikeExplosion();
-            timer = 0;
+            lr = GetComponent<LineRenderer>();
+            SetSpikes();
+            CreateSpikeExplosion(GeneralManager.instance.seExplosionTime[GeneralManager.instance.gameData.seExplosionTimeLevel]);
         }
     }
-
     public void SetSpikes()
     {
         LineRenderer parentLR = gameObject.transform.parent.GetComponent<LineRenderer>();
 
         float size = parentLR.GetPosition(0).x;
+
+        int spikeCount = GeneralManager.instance.seCount[GeneralManager.instance.gameData.seCountLevel];
 
         lr.positionCount = spikeCount * 2;
 
@@ -50,11 +39,14 @@ public class SpikeExplosion : MonoBehaviour
         }
     }
 
-    public void CreateSpikeExplosion()
+    public IEnumerator CreateSpikeExplosion(float timer)
     {
+        yield return new WaitForSeconds(timer);
         for(int i = 0; i < lr.positionCount/2; i++)
         {
             Instantiate(GeneralManager.instance.triBullet, transform.position, Quaternion.Euler(0, 0, (360 / lr.positionCount * 2) * i));
         }
+        StartCoroutine(CreateSpikeExplosion(timer));
+        yield return null;
     }
 }

@@ -5,9 +5,7 @@ using UnityEngine;
 public class TurretManager : MonoBehaviour
 {
     public float radius;
-    public float turretAttackTime;
     public float turretAttackTimeErrorPercentage;
-    public float turretRotateSpeed;
     public int turretCount;
     public GameObject turret;
 
@@ -15,7 +13,8 @@ public class TurretManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnTurrets(turretCount);
+        Debug.Log(GeneralManager.instance.gameData.ntCountLevel);
+        SpawnTurrets(GeneralManager.instance.ntCount[GeneralManager.instance.gameData.ntCountLevel]);
     }
 
     private void FixedUpdate()
@@ -34,9 +33,7 @@ public class TurretManager : MonoBehaviour
 
         for(int i = 0; i < Mathf.Clamp(turretsc,0, transform.GetChild(0).transform.childCount); i++)
         {
-            GameObject nturret = Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
-            nturret.GetComponent<TurnFaceToObj>().rotateSpeed = turretRotateSpeed;
-            nturret.GetComponentInChildren<CannonTurret>().recoilSpeed = 1/Random.Range(turretAttackTime - turretAttackTime / turretAttackTimeErrorPercentage, turretAttackTime + turretAttackTime / turretAttackTimeErrorPercentage);
+            Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
         }
     }
     void TurretFacing()
