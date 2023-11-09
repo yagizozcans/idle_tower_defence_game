@@ -5,22 +5,6 @@ using UnityEngine;
 public class RotatingTurret : MonoBehaviour
 {
     public float distance;
-
-    void Start()
-    {
-        if(gameObject.name == "TurningCircle")
-        {
-            CreateTris(GeneralManager.instance.circleTurretObj,GeneralManager.instance.tcCount[GeneralManager.instance.gameData.tcCountLevel]);
-        }
-        if(gameObject.name == "xRayTurret")
-        {
-            CreateTris(GeneralManager.instance.xRayTurretObj, GeneralManager.instance.xrayCount[GeneralManager.instance.gameData.xrayCountLevel]);
-        }
-        if (gameObject.name == "TriTurret")
-        {
-            CreateTris(GeneralManager.instance.triTurretObj, GeneralManager.instance.ttCount[GeneralManager.instance.gameData.ttCountLevel]);
-        }
-    }
     private void Update()
     {
         if (gameObject.name == "TurningCircle")
@@ -41,9 +25,37 @@ public class RotatingTurret : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             int angle = (360 / count) * i;
-            GameObject newTri = Instantiate(rotatingObj.gameObject, transform.position, Quaternion.Euler(new Vector3(0, 0, angle)),transform);
+            GameObject newTri = Instantiate(rotatingObj.gameObject, transform.position, Quaternion.Euler(new Vector3(0, 0, angle + transform.eulerAngles.z)),transform);
             newTri.transform.GetChild(0).transform.localPosition = Vector2.up * distance;
             newTri.name = $"tri{i}";
+        }
+    }
+
+    public void SetRotatingTurrets()
+    {
+        if (gameObject.name == "TurningCircle")
+        {
+            foreach(Transform obj in GeneralManager.instance.turningCircles.transform)
+            {
+                Destroy(obj.gameObject);
+            }
+            CreateTris(GeneralManager.instance.circleTurretObj, GeneralManager.instance.tcCount[GeneralManager.instance.gameData.tcCountLevel]);
+        }
+        if (gameObject.name == "xRayTurret")
+        {
+            foreach (Transform obj in GeneralManager.instance.XrayTurret.transform)
+            {
+                Destroy(obj.gameObject);
+            }
+            CreateTris(GeneralManager.instance.xRayTurretObj, GeneralManager.instance.xrayCount[GeneralManager.instance.gameData.xrayCountLevel]);
+        }
+        if (gameObject.name == "TriTurret")
+        {
+            foreach (Transform obj in GeneralManager.instance.TriangleTurret.transform)
+            {
+                Destroy(obj.gameObject);
+            }
+            CreateTris(GeneralManager.instance.triTurretObj, GeneralManager.instance.ttCount[GeneralManager.instance.gameData.ttCountLevel]);
         }
     }
 }

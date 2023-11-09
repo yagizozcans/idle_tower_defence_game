@@ -11,29 +11,23 @@ public class TurretManager : MonoBehaviour
 
     // Update is called once per frame
 
-    private void Start()
-    {
-        Debug.Log(GeneralManager.instance.gameData.ntCountLevel);
-        SpawnTurrets(GeneralManager.instance.ntCount[GeneralManager.instance.gameData.ntCountLevel]);
-    }
-
     private void FixedUpdate()
     {
         TurretFacing();
     }
-    void SpawnTurrets(int turretsc)
+    public void SpawnTurrets()
     {
         foreach (Transform child in transform)
         {
-            if(child.GetComponent<CannonTurret>() != null)
+            if(child.GetComponent<TurnFaceToObj>() != null)
             {
                 Destroy(child.gameObject);
             }
         }
 
-        for(int i = 0; i < Mathf.Clamp(turretsc,0, transform.GetChild(0).transform.childCount); i++)
+        for(int i = 0; i < Mathf.Clamp(GeneralManager.instance.ntCount[GeneralManager.instance.gameData.ntCountLevel], 0, transform.GetChild(0).transform.childCount); i++)
         {
-            Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
+            GameObject trt = Instantiate(turret, transform.GetChild(0).transform.GetChild(i).transform.position, Quaternion.identity,gameObject.transform);
         }
     }
     void TurretFacing()

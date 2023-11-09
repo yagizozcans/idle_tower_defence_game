@@ -82,7 +82,7 @@ LineRenderer:
   m_Positions: []
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  rotateSpeed: 600
 --- !u!1 &1872606790841154487
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +282,7 @@ LineRenderer:
   - {x: 0.2, y: 4, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.005
+    widthMultiplier: 0.02
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -352,7 +351,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84565dfb83aa7649babd7daab9e633b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilSpeed: 0.2
 --- !u!1 &8341870756426880853
 GameObject:
   m_ObjectHideFlags: 0

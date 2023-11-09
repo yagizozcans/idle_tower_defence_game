@@ -7,6 +7,18 @@ public class GeneralManager : MonoBehaviour
 {
     public static GeneralManager instance;
 
+    public BaseParameters healthParameters;
+    public BaseParameters attackParameters;
+    public BaseParameters defenceParameters;
+    public BaseParameters seCountParameters;
+    public BaseParameters seAttackSpeedParameters;
+    public BaseParameters ttCountParameters;
+    public BaseParameters ttAttackSpeedParameters;
+    public BaseParameters tcCountParameters;
+    public BaseParameters ntCountParameters;
+    public BaseParameters xrayCountParameters;
+    public BaseParameters stGraphParameters;
+
     //Middle Object Auto Attack
     public float[] moAttackSpeed;
 
@@ -37,7 +49,6 @@ public class GeneralManager : MonoBehaviour
     public int[] stGraphParameter;
     public Color[] stColor;
 
-
     public GameData gameData;
 
     private void Start()
@@ -45,6 +56,13 @@ public class GeneralManager : MonoBehaviour
         instance = this;
         LoadFromJson();
     }
+
+    public GameObject turrets;
+    public GameObject spikeExplosion;
+    public GameObject spikeThrower;
+    public GameObject turningCircles;
+    public GameObject TriangleTurret;
+    public GameObject XrayTurret;
 
     public GameObject xRayTurretObj;
     public GameObject triTurretObj;

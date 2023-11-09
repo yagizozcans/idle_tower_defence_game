@@ -5,15 +5,22 @@ using UnityEngine;
 public class SpikeExplosion : MonoBehaviour
 {
     LineRenderer lr;
-    private void Start()
+
+    public float rotateSpeed;
+
+    public void SetSpikeExplosion()
     {
-        if(GeneralManager.instance.gameData.seActive)
-        {
-            lr = GetComponent<LineRenderer>();
-            SetSpikes();
-            CreateSpikeExplosion(GeneralManager.instance.seExplosionTime[GeneralManager.instance.gameData.seExplosionTimeLevel]);
-        }
+        StopAllCoroutines();
+        lr = GetComponent<LineRenderer>();
+        SetSpikes();
+        StartCoroutine(CreateSpikeExplosion(GeneralManager.instance.seExplosionTime[GeneralManager.instance.gameData.seExplosionTimeLevel]));
     }
+
+    private void Update()
+    {
+        transform.eulerAngles += Vector3.forward * Time.deltaTime * rotateSpeed;
+    }
+
     public void SetSpikes()
     {
         LineRenderer parentLR = gameObject.transform.parent.GetComponent<LineRenderer>();
@@ -29,7 +36,6 @@ public class SpikeExplosion : MonoBehaviour
             if(i % 2 == 0)
             {
                 float degree = (360 / spikeCount) * (i/2+1);
-                Debug.Log(degree);
                 lr.SetPosition(i, new Vector3(size * Mathf.Sin(degree * Mathf.PI / 180) / 2, Mathf.Cos(degree * Mathf.PI / 180) / 2, 0));
             }
             else
@@ -41,11 +47,11 @@ public class SpikeExplosion : MonoBehaviour
 
     public IEnumerator CreateSpikeExplosion(float timer)
     {
-        yield return new WaitForSeconds(timer);
-        for(int i = 0; i < lr.positionCount/2; i++)
+        for (int i = 0; i < lr.positionCount / 2; i++)
         {
-            Instantiate(GeneralManager.instance.triBullet, transform.position, Quaternion.Euler(0, 0, (360 / lr.positionCount * 2) * i));
+            GameObject tri = Instantiate(GeneralManager.instance.triBullet, transform.position, Quaternion.Euler(0, 0, ((360 / lr.positionCount * 2) * i) + transform.eulerAngles.z));
         }
+        yield return new WaitForSeconds(timer);
         StartCoroutine(CreateSpikeExplosion(timer));
         yield return null;
     }

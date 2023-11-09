@@ -8,11 +8,10 @@ public class SpikeThrower : MonoBehaviour
     public float throwTime;
     int counter = 1;
     public int graphParamater;
-    public Color color;
 
     private void Update()
     {
-        if(GeneralManager.instance.gameData.stActive)
+        if(GeneralManager.instance.gameData.stGraphParameterLevel != 0)
         {
             timer += Time.deltaTime;
             if (timer > GeneralManager.instance.stAttackSpeed[GeneralManager.instance.gameData.stAttackSpeedLevel])
@@ -22,19 +21,12 @@ public class SpikeThrower : MonoBehaviour
                 timer = 0;
             }
         }
-        timer += Time.deltaTime;
-        if (timer > throwTime)
-        {
-            CreateSpike(counter * (360 / graphParamater));
-            counter++;
-            timer = 0;
-        }
     }
 
     public void CreateSpike(int zRotation)
     {
         GameObject spike = Instantiate(GeneralManager.instance.triBullet, transform.position, Quaternion.Euler(0, 0, zRotation));
-        spike.GetComponent<LineRenderer>().startColor = color;
-        spike.GetComponent<LineRenderer>().endColor = color;
+        spike.GetComponent<LineRenderer>().startColor = GeneralManager.instance.stColor[Random.Range(0, GeneralManager.instance.stColor.Length)];
+        spike.GetComponent<LineRenderer>().endColor = GeneralManager.instance.stColor[Random.Range(0, GeneralManager.instance.stColor.Length)];
     }
 }
