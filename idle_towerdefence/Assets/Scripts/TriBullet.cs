@@ -16,8 +16,9 @@ public class TriBullet : MonoBehaviour
             GameObject obj = GeneralManager.instance.PhysicalRaycastCheck(movementSpeed, "enemy", this.transform, GetComponent<DrawLRObjs>().radius + transform.GetComponent<DrawLRObjs>().lineWidth * 2, layer);
             if (obj != null)
             {
-                Destroy(obj);
-                Destroy(gameObject);
+                obj.GetComponent<EnemyMain>().health -= GeneralManager.instance.gameData.moAttack;
+                obj.GetComponent<EnemyMain>().enemyDeath();
+                Destroy(gameObject, Time.deltaTime);
             }
         }
     }

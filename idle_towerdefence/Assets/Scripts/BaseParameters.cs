@@ -4,4 +4,5 @@ public class BaseParameters
 {
     public float baseCost;
     public float growthRate;
+    public float growthRateForItself;
 }

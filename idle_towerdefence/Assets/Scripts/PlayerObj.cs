@@ -14,9 +14,9 @@ public class PlayerObj : MonoBehaviour
     public float oldclosestDistance = 50;
 
     public float attackSpeed;
+    public bool autoAttack;
     float timer;
     bool outofsight;
-    public bool autoattack;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class PlayerObj : MonoBehaviour
     {
         CheckClosestEnemy();
         timer += Time.deltaTime;
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !outofsight)
         {
             AttackMainObj();
         }
@@ -62,7 +62,7 @@ public class PlayerObj : MonoBehaviour
             outofsight = false;
         }
 
-        if (timer > attackSpeed && !outofsight && autoattack)
+        if (timer > GeneralManager.instance.gameData.moBaseAttackSpeed && !outofsight && autoAttack)
         {
             if(oldclosestDistance < radius/2)
             {

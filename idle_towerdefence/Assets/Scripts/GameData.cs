@@ -39,9 +39,12 @@ public class GameData
 
     public int money;
     public float moAttack;
+    public float moAttackUpgradedLevel;
     public float moHealth;
     public float moDefence;
     public float moHealthUpgradedLevel;
     public float moDefenceUpgradedLevel;
+    public float moBaseAttackSpeed;
+    public int currentWave;
 
 }

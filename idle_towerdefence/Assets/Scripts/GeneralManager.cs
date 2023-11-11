@@ -10,6 +10,7 @@ public class GeneralManager : MonoBehaviour
     public BaseParameters healthParameters;
     public BaseParameters attackParameters;
     public BaseParameters defenceParameters;
+    public BaseParameters moAttackSpeedParameters;
     public BaseParameters seCountParameters;
     public BaseParameters seAttackSpeedParameters;
     public BaseParameters ttCountParameters;
