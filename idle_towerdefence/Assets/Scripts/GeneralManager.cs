@@ -19,6 +19,10 @@ public class GeneralManager : MonoBehaviour
     public BaseParameters ntCountParameters;
     public BaseParameters xrayCountParameters;
     public BaseParameters stGraphParameters;
+    public BaseParameters bodySpikeParameters;
+    public BaseParameters shockWaveParameters;
+
+    public float gravity;
 
     //Middle Object Auto Attack
     public float[] moAttackSpeed;
@@ -73,7 +77,12 @@ public class GeneralManager : MonoBehaviour
     public GameObject triBullet;
     public GameObject circleBullet;
     public GameObject turret;
+    public GameObject bodyspike;
+    public GameObject shockWave;
     public GameObject enemy1;
+
+    public float currentHP;
+    public int shockWaveBaseTimer;
 
     public GameObject PhysicalRaycastCheck(float movementSpeed,string tag,Transform whichobj, float radius, LayerMask layer)
     {

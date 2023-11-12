@@ -35,9 +35,13 @@ public class Circle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "enemy")
+        if(!isRespawning)
         {
-            StartCoroutine(Respawn(respawnTime));
+            if (collision.tag == "enemy")
+            {
+                StartCoroutine(Respawn(respawnTime));
+                collision.gameObject.GetComponent<EnemyMain>().enemyGiveDamage(GeneralManager.instance.gameData.moAttack);
+            }
         }
     }
 }

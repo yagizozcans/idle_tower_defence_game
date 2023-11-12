@@ -200,8 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ffd40f2129ede43b063973ea217323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movSpeed: 2
-  health: 1
+  movSpeed: 5
+  accelerationSpeed: 10
+  maxMovSpeed: 7
 --- !u!114 &3199554209969292444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,3 +256,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+  thisBaseParameters:
+    baseCost: 2
+    growthRate: 1.05
+    growthRateForItself: 1.2
+  collisionDamageParameters:
+    baseCost: 1
+    growthRate: 1.05
+    growthRateForItself: 0
+  enemyCollisionDamage: 5

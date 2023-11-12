@@ -20,18 +20,26 @@ public class UIManager : MonoBehaviour
         currentWaveImgBaseWidth = currentWaveImg.rectTransform.sizeDelta.x;
         attackBarTxt.text = ChangeNumber((int)GeneralManager.instance.gameData.moAttack);
         defenceBarTxt.text = "%" + ChangeNumber((int)GeneralManager.instance.gameData.moDefenceUpgradedLevel);
-        healthBarTxt.text = ChangeNumber((int)GeneralManager.instance.gameData.moHealth);
         currentWaveTxt.text = "Wave " + GeneralManager.instance.gameData.currentWave;
     }
     public void Update()
     {
         if(Input.GetKey(KeyCode.T))
         {
-            GeneralManager.instance.gameData.money += 10000;
+            GeneralManager.instance.gameData.money += 100000;
+        }
+        if(Input.GetKey(KeyCode.U))
+        {
+            Time.timeScale = 5;
+        }
+        else
+        {
+            Time.timeScale = 1;
         }
         moneyBarTxt.text = "$" + ChangeNumber(GeneralManager.instance.gameData.money);
         currentWaveImg.rectTransform.sizeDelta = new Vector2(Mathf.Lerp(currentWaveImg.rectTransform.sizeDelta.x, currentWaveImgBaseWidth * ((float)EnemyManager.instance.currentEnemyKills / (float)EnemyManager.instance.howManyEnemiesGonnaSpawn),0.2f),currentWaveImg.rectTransform.sizeDelta.y);
         currentWaveTxt.text = "Wave " + GeneralManager.instance.gameData.currentWave;
+        healthBarTxt.text = ChangeNumber((int)GeneralManager.instance.currentHP) + "/" + ChangeNumber((int)GeneralManager.instance.gameData.moHealth);
     }
 
     public void HealtUpgrade()
@@ -42,10 +50,10 @@ public class UIManager : MonoBehaviour
         {
             GeneralManager.instance.gameData.moHealthUpgradedLevel += 1;
             GeneralManager.instance.gameData.moHealth = GeneralManager.instance.healthParameters.baseCost * Mathf.Pow(GeneralManager.instance.healthParameters.growthRateForItself, GeneralManager.instance.gameData.moHealthUpgradedLevel);
-            healthBarTxt.text = ChangeNumber((int)GeneralManager.instance.gameData.moHealth);
+            GeneralManager.instance.currentHP = GeneralManager.instance.gameData.moHealth;
             float nextCost = GeneralManager.instance.healthParameters.baseCost * Mathf.Pow(GeneralManager.instance.healthParameters.growthRate, GeneralManager.instance.gameData.moHealthUpgradedLevel + 1);
             float upgradedValue = GeneralManager.instance.healthParameters.baseCost * Mathf.Pow(GeneralManager.instance.healthParameters.growthRateForItself, GeneralManager.instance.gameData.moHealthUpgradedLevel + 1);
-            btn.transform.parent.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)upgradedValue);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)upgradedValue);
             btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
             GeneralManager.instance.gameData.money -= (int)currentCost;
         }
@@ -63,7 +71,7 @@ public class UIManager : MonoBehaviour
             attackBarTxt.text = ChangeNumber((int)GeneralManager.instance.gameData.moAttack);
             float nextCost = GeneralManager.instance.attackParameters.baseCost * Mathf.Pow(GeneralManager.instance.attackParameters.growthRate, GeneralManager.instance.gameData.moAttackUpgradedLevel + 1);
             float upgradedValue = GeneralManager.instance.attackParameters.baseCost * Mathf.Pow(GeneralManager.instance.attackParameters.growthRateForItself, GeneralManager.instance.gameData.moAttackUpgradedLevel + 1);
-            btn.transform.parent.GetChild(0).GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)upgradedValue);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)upgradedValue);
             btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
             GeneralManager.instance.gameData.money -= (int)currentCost;
         }
@@ -74,6 +82,7 @@ public class UIManager : MonoBehaviour
         GameObject btn = EventSystem.current.currentSelectedGameObject;
         GeneralManager.instance.gameData.moBaseAttackSpeed -= 0.05f;
         float nextCost = GeneralManager.instance.moAttackSpeedParameters.baseCost * Mathf.Pow(GeneralManager.instance.moAttackSpeedParameters.growthRate , (2 - GeneralManager.instance.gameData.moBaseAttackSpeed) * 20);
+        btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = (GeneralManager.instance.gameData.moBaseAttackSpeed - 0.05f).ToString("F2");
         btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
     }
 
@@ -82,32 +91,70 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void BodySpikeCountUpgrade()
+    {
+        GameObject btn = EventSystem.current.currentSelectedGameObject;
+        float currentCost = GeneralManager.instance.bodySpikeParameters.baseCost * Mathf.Pow(GeneralManager.instance.bodySpikeParameters.growthRate, GeneralManager.instance.gameData.bodySpikeCount+1);
+        if(GeneralManager.instance.gameData.money - currentCost >= 0)
+        {
+            GeneralManager.instance.gameData.bodySpikeCount++;
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = (GeneralManager.instance.gameData.bodySpikeCount+1).ToString();
+            float nextCost = GeneralManager.instance.bodySpikeParameters.baseCost * Mathf.Pow(GeneralManager.instance.bodySpikeParameters.growthRate, GeneralManager.instance.gameData.bodySpikeCount + 1);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+            GeneralManager.instance.gameData.money -= (int)currentCost;
+        }
+    }
+
     public void DefenceUpgrade()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        float nextCost = GeneralManager.instance.defenceParameters.baseCost * Mathf.Pow(GeneralManager.instance.defenceParameters.growthRate, GeneralManager.instance.gameData.moDefenceUpgradedLevel);
-        GeneralManager.instance.gameData.moDefenceUpgradedLevel += 1;
-        defenceBarTxt.text = "%" + ChangeNumber((int)GeneralManager.instance.gameData.moDefenceUpgradedLevel);
-        GeneralManager.instance.gameData.moDefence = nextCost;
-        btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+        float currentCost = GeneralManager.instance.defenceParameters.baseCost * Mathf.Pow(GeneralManager.instance.defenceParameters.growthRate, GeneralManager.instance.gameData.moDefenceUpgradedLevel+1);
+        if(GeneralManager.instance.gameData.money - currentCost >= 0)
+        {
+            GeneralManager.instance.gameData.moDefenceUpgradedLevel += 1;
+            float nextCost = GeneralManager.instance.defenceParameters.baseCost * Mathf.Pow(GeneralManager.instance.defenceParameters.growthRate, GeneralManager.instance.gameData.moDefenceUpgradedLevel + 1);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "%" + (GeneralManager.instance.gameData.moDefenceUpgradedLevel + 1).ToString();
+            defenceBarTxt.text = "%" + ChangeNumber((int)GeneralManager.instance.gameData.moDefenceUpgradedLevel);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+            GeneralManager.instance.gameData.money -= (int)currentCost;
+        }
+        if (GeneralManager.instance.gameData.moDefenceUpgradedLevel == 50)
+        {
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.GetComponent<Button>().interactable = false;
+        }
     }
 
     public void SpikeExplosionCountUpgrade()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        GeneralManager.instance.gameData.seCountLevel++;
-        float nextCost = GeneralManager.instance.seCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.seCountParameters.growthRate, GeneralManager.instance.seCount[GeneralManager.instance.gameData.seCountLevel+1]);
-        btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
-        GeneralManager.instance.spikeExplosion.GetComponent<SpikeExplosion>().SetSpikeExplosion();
-
+        if (GeneralManager.instance.gameData.seCountLevel + 1 < GeneralManager.instance.seCount.Length - 1)
+        {
+            GeneralManager.instance.gameData.seCountLevel++;
+            float nextCost = GeneralManager.instance.seCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.seCountParameters.growthRate, GeneralManager.instance.seCount[GeneralManager.instance.gameData.seCountLevel + 1]);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+            GeneralManager.instance.spikeExplosion.GetComponent<SpikeExplosion>().SetSpikeExplosion();
+        }
+        if (GeneralManager.instance.gameData.seCountLevel == GeneralManager.instance.seCount.Length - 2)
+        {
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.GetComponent<Button>().interactable = false;
+        }
     }
     public void SpikeExplosionAttackSpeedUpgrade()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        GeneralManager.instance.gameData.seExplosionTimeLevel++;
-        float nextCost = GeneralManager.instance.seAttackSpeedParameters.baseCost * Mathf.Pow(GeneralManager.instance.seAttackSpeedParameters.growthRate, GeneralManager.instance.gameData.seExplosionTimeLevel + 1);
-        btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
-        GeneralManager.instance.spikeExplosion.GetComponent<SpikeExplosion>().SetSpikeExplosion();
+        if(GeneralManager.instance.gameData.seExplosionTimeLevel + 1 < GeneralManager.instance.seExplosionTime.Length - 1)
+        {
+            GeneralManager.instance.gameData.seExplosionTimeLevel++;
+
+            float nextCost = GeneralManager.instance.seAttackSpeedParameters.baseCost * Mathf.Pow(GeneralManager.instance.seAttackSpeedParameters.growthRate, GeneralManager.instance.gameData.seExplosionTimeLevel + 1);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+            GeneralManager.instance.spikeExplosion.GetComponent<SpikeExplosion>().SetSpikeExplosion();
+        }
+        Debug.Log(GeneralManager.instance.seExplosionTime[GeneralManager.instance.gameData.seExplosionTimeLevel]);
     }
 
     public void TriangleTurretCountUpgrade()
@@ -123,6 +170,7 @@ public class UIManager : MonoBehaviour
         if(GeneralManager.instance.gameData.ttCountLevel == GeneralManager.instance.ttCount.Length - 2)
         {
             btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
             btn.GetComponent<Button>().interactable = false;
         }
     }
@@ -130,7 +178,7 @@ public class UIManager : MonoBehaviour
     public void TriangleTurretRotateSpeed()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        GeneralManager.instance.gameData.seExplosionTimeLevel++;
+        GeneralManager.instance.gameData.ttTurnSpeedLevel++;
         float nextCost = GeneralManager.instance.seAttackSpeedParameters.baseCost * Mathf.Pow(GeneralManager.instance.seAttackSpeedParameters.growthRate, GeneralManager.instance.gameData.seExplosionTimeLevel + 1);
         btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
         GeneralManager.instance.spikeExplosion.GetComponent<SpikeExplosion>().SetSpikeExplosion();
@@ -149,6 +197,7 @@ public class UIManager : MonoBehaviour
         if (GeneralManager.instance.gameData.tcCountLevel == GeneralManager.instance.tcCount.Length - 2)
         {
             btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
             btn.GetComponent<Button>().interactable = false;
         }
     }
@@ -166,16 +215,20 @@ public class UIManager : MonoBehaviour
     public void xrayCountUpgrade()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        if (GeneralManager.instance.gameData.xrayCountLevel + 1 < GeneralManager.instance.xrayCount.Length - 1)
+        float currentCost = GeneralManager.instance.xrayCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.xrayCountParameters.growthRate, GeneralManager.instance.xrayCount[GeneralManager.instance.gameData.xrayCountLevel + 1]);
+        if (GeneralManager.instance.gameData.xrayCountLevel + 1 < GeneralManager.instance.xrayCount.Length - 1 && GeneralManager.instance.gameData.money - currentCost >= 0)
         {
             GeneralManager.instance.gameData.xrayCountLevel++;
+            GeneralManager.instance.gameData.money -= (int)currentCost;
             float nextCost = GeneralManager.instance.xrayCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.xrayCountParameters.growthRate, GeneralManager.instance.xrayCount[GeneralManager.instance.gameData.xrayCountLevel + 1]);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = (GeneralManager.instance.gameData.xrayCountLevel + 1).ToString();
             btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
             GeneralManager.instance.XrayTurret.GetComponent<RotatingTurret>().SetRotatingTurrets();
         }
         if (GeneralManager.instance.gameData.xrayCountLevel == GeneralManager.instance.xrayCount.Length - 2)
         {
             btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
             btn.GetComponent<Button>().interactable = false;
         }
     }
@@ -202,6 +255,7 @@ public class UIManager : MonoBehaviour
         if (GeneralManager.instance.gameData.stGraphParameterLevel == GeneralManager.instance.stGraphParameter.Length - 2)
         {
             btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
             btn.GetComponent<Button>().interactable = false;
         }
     }
@@ -209,16 +263,20 @@ public class UIManager : MonoBehaviour
     public void TurretCountUpgrade()
     {
         GameObject btn = EventSystem.current.currentSelectedGameObject;
-        if (GeneralManager.instance.gameData.ntCountLevel + 1 < GeneralManager.instance.ntCount.Length - 1)
+        float currentCost = GeneralManager.instance.ntCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.ntCountParameters.growthRate, GeneralManager.instance.ntCount[GeneralManager.instance.gameData.ntCountLevel + 1]);
+        if (GeneralManager.instance.gameData.ntCountLevel + 1 < GeneralManager.instance.ntCount.Length - 1 && GeneralManager.instance.gameData.money - currentCost >= 0)
         {
             GeneralManager.instance.gameData.ntCountLevel++;
-            float nextCost = GeneralManager.instance.ntCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.ntCountParameters.growthRate, GeneralManager.instance.ntCount[GeneralManager.instance.gameData.ntCountLevel + 1]);
+            GeneralManager.instance.gameData.money -= (int)currentCost;
+            float nextCost = GeneralManager.instance.ntCountParameters.baseCost * Mathf.Pow(GeneralManager.instance.ntCountParameters.growthRate, GeneralManager.instance.gameData.ntCountLevel + 1);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = (GeneralManager.instance.gameData.ntCountLevel+1).ToString();
             btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
             GeneralManager.instance.turrets.GetComponent<TurretManager>().SpawnTurrets();
         }
         if (GeneralManager.instance.gameData.ntCountLevel == GeneralManager.instance.ntCount.Length - 2)
         {
             btn.GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "MAX";
             btn.GetComponent<Button>().interactable = false;
         }
     }
@@ -230,6 +288,20 @@ public class UIManager : MonoBehaviour
 
     public void TurretRotateSpeedUpgrade()
     {
+
+    }
+    public void ShockWaveUpgrade()
+    {
+        GameObject btn = EventSystem.current.currentSelectedGameObject;
+        float currentCost = GeneralManager.instance.shockWaveParameters.baseCost * Mathf.Pow(GeneralManager.instance.shockWaveParameters.growthRate, GeneralManager.instance.gameData.shockWaveUpgradedLevel + 1);
+        if (GeneralManager.instance.gameData.money >= currentCost)
+        {
+            GeneralManager.instance.gameData.shockWaveUpgradedLevel += 1;
+            float nextCost = GeneralManager.instance.shockWaveParameters.baseCost * Mathf.Pow(GeneralManager.instance.shockWaveParameters.growthRate, GeneralManager.instance.gameData.shockWaveUpgradedLevel + 1);
+            btn.transform.parent.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = (GeneralManager.instance.shockWaveBaseTimer - 0.02f * (GeneralManager.instance.gameData.shockWaveUpgradedLevel + 1)).ToString("F2");
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = ChangeNumber((decimal)nextCost) + "$";
+            GeneralManager.instance.gameData.money -= (int)currentCost;
+        }
 
     }
     public string ChangeNumber(decimal amount)

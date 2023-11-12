@@ -37,8 +37,12 @@ public class GameData
     public int stGraphParameterLevel;
     public int stColorLevel;
 
+    public int shockWaveUpgradedLevel;
+
     public int money;
     public float moAttack;
+    public float bodySpikeAttack;
+    public float bodySpikeCount;
     public float moAttackUpgradedLevel;
     public float moHealth;
     public float moDefence;

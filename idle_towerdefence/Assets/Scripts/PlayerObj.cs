@@ -21,6 +21,7 @@ public class PlayerObj : MonoBehaviour
     private void Start()
     {
         instance = this;
+        GeneralManager.instance.currentHP = GeneralManager.instance.gameData.moHealth;
         GetComponent<CircleCollider2D>().radius = GetComponent<DrawLRObjs>().radius;
         AttackRangeLRUpdate();
     }
@@ -90,6 +91,18 @@ public class PlayerObj : MonoBehaviour
         if(collision.tag == "enemy")
         {
             Destroy(collision.gameObject);
+            GeneralManager.instance.currentHP -= collision.GetComponent<EnemyMain>().thisBaseParameters.baseCost * Mathf.Pow(collision.GetComponent<EnemyMain>().collisionDamageParameters.growthRate, GeneralManager.instance.gameData.currentWave);
+            collision.GetComponent<EnemyMain>().health = 0;
+            collision.GetComponent<EnemyMain>().enemyGiveDamage(0f);
+            BodyAttack();
+        }
+    }
+
+    public void BodyAttack()
+    {
+        for(int i = 0; i < GeneralManager.instance.gameData.bodySpikeCount; i++)
+        {
+            Instantiate(GeneralManager.instance.bodyspike, transform.position, Quaternion.identity);
         }
     }
 }
