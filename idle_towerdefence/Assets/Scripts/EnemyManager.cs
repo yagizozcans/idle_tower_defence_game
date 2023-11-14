@@ -104,6 +104,7 @@ public class EnemyManager : MonoBehaviour
 
     public void StartLevel()
     {
+        spawnRate = 1 / (Mathf.Log10(GeneralManager.instance.gameData.currentWave+2) / Mathf.Log10(3));
         levelOnGoing = true;
         currentSpawnedEnemies = 0;
         currentEnemyKills = 0;
