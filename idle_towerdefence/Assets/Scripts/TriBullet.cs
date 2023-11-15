@@ -8,6 +8,7 @@ public class TriBullet : MonoBehaviour
     public LayerMask layer;
     public bool collideWithNew;
     public bool destroyAfterCollide;
+    public bool splitAfterCollide;
 
     private void Update()
     {
@@ -20,7 +21,8 @@ public class TriBullet : MonoBehaviour
                 if (obj != null)
                 {
                     obj.GetComponent<EnemyMain>().enemyGiveDamage(GeneralManager.instance.gameData.moAttack);
-                    if (destroyAfterCollide)
+                    float penetrate = Random.Range(0f, 100f);
+                    if (destroyAfterCollide && penetrate > GeneralManager.instance.gameData.moPenetrationChance)
                     {
                         Destroy(gameObject, Time.deltaTime);
                     }

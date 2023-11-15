@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.U))
         {
-            Time.timeScale = 5;
+            Time.timeScale = 10;
         }
         else
         {

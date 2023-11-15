@@ -91,7 +91,8 @@ public class EnemyManager : MonoBehaviour
 
         float angle = Mathf.Atan2(yAxis - PlayerObj.instance.transform.position.y, xAxis - PlayerObj.instance.transform.position.x) * Mathf.Rad2Deg;
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
-        Instantiate(enemy, new Vector2(xAxis, yAxis), targetRotation);
+        GameObject newEnemy = Instantiate(enemy, new Vector2(xAxis, yAxis), targetRotation);
+        newEnemy.GetComponent<EnemyMain>().health = newEnemy.GetComponent<EnemyMain>().thisBaseParameters.baseCost * Mathf.Pow(newEnemy.GetComponent<EnemyMain>().thisBaseParameters.growthRate, GeneralManager.instance.gameData.currentWave);
     }
     void EnemyRain(GameObject enemy)
     {

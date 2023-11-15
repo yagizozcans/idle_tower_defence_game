@@ -49,6 +49,8 @@ public class GameData
     public float moHealthUpgradedLevel;
     public float moDefenceUpgradedLevel;
     public float moBaseAttackSpeed;
+    public int moPenetrationChance;
     public int currentWave;
+
 
 }

@@ -6,11 +6,11 @@ public class LightningTurret : MonoBehaviour
 {
     public float radius;
 
-    bool attacked;
+    public bool autoAtt;
 
     private void Update()
     {
-        if(PlayerObj.instance.closestEnemy != null && PlayerObj.instance.oldclosestDistance < radius/2)
+        if(PlayerObj.instance.closestEnemy != null && PlayerObj.instance.oldclosestDistance < radius/2 && autoAtt)
         {
             attack();
         }
@@ -43,8 +43,6 @@ public class LightningTurret : MonoBehaviour
 
         Vector2 direction = PlayerObj.instance.closestEnemy.transform.position - transform.position;
         Vector2 directionInverse = new Vector2(-direction.y,direction.x);
-        Debug.Log(directionInverse);
-        Debug.Log(direction);
         GetComponent<LineRenderer>().SetPosition(0,transform.position);
         for(int i = 1; i < randomLengths.Length; i++)
         {
@@ -52,7 +50,8 @@ public class LightningTurret : MonoBehaviour
             Vector2 mid = new Vector2(transform.position.x + direction.x * (randomLengths[i]) + directionInverse.x * randomValue, transform.position.y + direction.y * (randomLengths[i]) + directionInverse.y * randomValue);
             GetComponent<LineRenderer>().SetPosition(i, mid);
         }
+        GetComponent<LineRenderer>().SetPosition(pointCount - 1, new Vector2(transform.position.x + direction.x, transform.position.y + direction.y));
 
-        PlayerObj.instance.closestEnemy.GetComponent<EnemyMain>().enemyGiveDamage(5f * Time.deltaTime);
+        PlayerObj.instance.closestEnemy.GetComponent<EnemyMain>().enemyGiveDamage(GeneralManager.instance.gameData.moAttack * Time.deltaTime);
     }
 }

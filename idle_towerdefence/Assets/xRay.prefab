@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 6605052181372834743}
   - component: {fileID: 7170942312303938256}
   - component: {fileID: 5064338459299334766}
+  - component: {fileID: 1798438875358521875}
   m_Layer: 0
   m_Name: Tri
   m_TagString: bullet
@@ -642,6 +643,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.47, y: 4.02}
   m_EdgeRadius: 0
+--- !u!114 &1798438875358521875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6773236195013668295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add77d78c9593cd4db89a970e0c5d035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7157695057439834289
 GameObject:
   m_ObjectHideFlags: 0

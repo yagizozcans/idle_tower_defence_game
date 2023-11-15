@@ -80,6 +80,7 @@ public class GeneralManager : MonoBehaviour
     public GameObject bodyspike;
     public GameObject shockWave;
     public GameObject enemy1;
+    public GameObject simpleParticle;
 
     public float currentHP;
     public int shockWaveBaseTimer;

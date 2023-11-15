@@ -7069,6 +7069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 6
+  autoAtt: 1
 --- !u!1 &563739425
 GameObject:
   m_ObjectHideFlags: 0
@@ -8923,6 +8924,7 @@ MonoBehaviour:
     moHealthUpgradedLevel: 0
     moDefenceUpgradedLevel: 0
     moBaseAttackSpeed: 0.5
+    moPenetrationChance: 0
     currentWave: 1
   turrets: {fileID: 661722820}
   spikeExplosion: {fileID: 120213256}
@@ -8939,6 +8941,7 @@ MonoBehaviour:
   bodyspike: {fileID: 4608462973722961481, guid: 0f266d0b4e6bbfb45b91597adf5c0c7b, type: 3}
   shockWave: {fileID: 430693969148992581, guid: d9961a1d7b556c9498de217db9062d32, type: 3}
   enemy1: {fileID: 5731752813825626313, guid: d7a0706eb1ec01a4e8312f6979abac67, type: 3}
+  simpleParticle: {fileID: 2628575904041366023, guid: 356aa7958e9e75844a3f9e3ce980f214, type: 3}
   currentHP: 0
   shockWaveBaseTimer: 3
 --- !u!4 &673335385
@@ -14096,6 +14099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1156930609}
   - component: {fileID: 1156930608}
+  - component: {fileID: 1156930610}
   m_Layer: 0
   m_Name: xRayTurret
   m_TagString: Untagged
@@ -14131,6 +14135,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1756176631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1156930610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156930607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: add77d78c9593cd4db89a970e0c5d035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1175532291
 GameObject:
   m_ObjectHideFlags: 0
@@ -19643,7 +19659,7 @@ MonoBehaviour:
   radius: 5
   oldclosestDistance: 50
   attackSpeed: 1
-  autoAttack: 0
+  autoAttack: 1
 --- !u!58 &1756176634
 CircleCollider2D:
   m_ObjectHideFlags: 0

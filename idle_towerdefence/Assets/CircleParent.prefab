@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lr: {fileID: 0}
-  cornercount: 16
+  cornercount: 8
   radius: 0.05
   lineWidth: 0.01
 --- !u!96 &13149558276089351

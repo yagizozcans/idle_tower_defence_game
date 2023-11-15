@@ -200,9 +200,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ffd40f2129ede43b063973ea217323, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movSpeed: 5
+  movSpeed: 4
   accelerationSpeed: 10
-  maxMovSpeed: 7
+  maxMovSpeed: 4
 --- !u!114 &3199554209969292444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,3 +265,4 @@ MonoBehaviour:
     growthRate: 1.05
     growthRateForItself: 0
   enemyCollisionDamage: 5
+  particle: {fileID: 2628575904041366023, guid: 356aa7958e9e75844a3f9e3ce980f214, type: 3}
